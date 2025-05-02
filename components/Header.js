@@ -64,10 +64,6 @@ function Header() {
         setIsModalVisible(!isModalVisible);
     };
 
-    const showHiddenArticles = () => {
-        dispatch(removeAllHiddenArticles());
-    }
-
     let modalContent;
     if (!user.isConnected) {
         modalContent = (
