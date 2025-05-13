@@ -1,9 +1,8 @@
-import styles from '../styles/Home.module.css';
 import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
 import PersonNode from '../components/PersonNode';
 
-const Tree = dynamic(() => import('react-d3-tree').then(mod => mod.default || mod.Tree), {ssr: false,});
+const Tree = dynamic(() => import('react-d3-tree').then(mod => mod.default || mod.Tree), { ssr: false });
 
 function Home() {
   const [treeData, setTreeData] = useState(null);
@@ -20,19 +19,21 @@ function Home() {
 
   if (!treeData) return <p>Chargement de l’arbre…</p>;
 
-  console.log('treeData', treeData)
-
   return (
-    <div style={{ width: '100%', height: '100vh' }}>
+    <div style={{ width: '100vw', height: '100vh' }}>
       <Tree
         data={[treeData]}
         orientation="horizontal"
         collapsible={false}
-        translate={{ x: 100, y: 200 }}
-        nodeSize={{ x: 120, y: 60 }}
+        translate={{ x: 200, y: 400 }}
+        nodeSize={{ x: 260, y: 100 }}
         renderCustomNodeElement={({ nodeDatum }) => (
           <PersonNode nodeDatum={nodeDatum} />
         )}
+        zoomable={true}
+        initialZoom={0.7} // optionnel : zoom de départ
+        zoomExtent={[0.2, 2.5]} // <-- augmente le zoom max autorisé
+        separation={{ siblings: 1, nonSiblings: 2 }}
       />
     </div>
   );

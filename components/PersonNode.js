@@ -1,83 +1,84 @@
 export default function PersonNode({ nodeDatum }) {
-  const width = 120;
-  const height = 50;
-  const spacing = 10; // espace entre les rectangles
-  const person1Name = nodeDatum.name;
-  const conjointName = nodeDatum.conjointData?.name;
-  console.log(conjointName)
-  const person1Width = String(person1Name).length*9;
-  console.log(person1Width)
-  const conjointWidth = String(conjointName).length*9;
-  
-  let color;
+  const baseHeight = 40;
+  const basePadding = 12;
+  const fontSize = 12;
+  const spacingBetweenPartners = 10;
+
+  const name1 = nodeDatum.name || '';
+  const name2 = nodeDatum.conjointData?.name || '';
+
+  const name1Width = name1.length * fontSize * 0.6 + basePadding * 2;
+  const name2Width = name2.length * fontSize * 0.6 + basePadding * 2;
+
   const generation = nodeDatum.attributes?.idGeneration;
+  let color;
 
   if (generation === 1) {
-    color = '#7f7f7f'; // Gris moyen
+    color = '#7f7f7f';
   } else if (generation === 2) {
-    color = '#006400'; // Vert foncé (équivalent à l’arbre)
+    color = '#006400';
   } else if (generation === 3) {
-    color = '#1e90ff'; // Bleu soutenu
+    color = '#1e90ff';
   } else if (generation === 4) {
-    color = '#ff0000'; // Rouge vif
+    color = '#ff0000';
   } else if (generation === 5) {
-    color = '#ffd700'; // Jaune doré
+    color = '#ffd700';
   } else if (generation === 6) {
-    color = '#8a2be2'; // Violet vif
+    color = '#8a2be2';
   } else if (generation === 7) {
-    color = '#ff69b4'; // Rose bonbon
+    color = '#ff69b4';
   } else {
-    color = '#ccc'; // Par défaut : gris clair
+    color = '#ccc';
   }
 
+  const totalWidth = name1Width + (nodeDatum.conjointData ? (name2Width + spacingBetweenPartners) : 0);
 
   return (
     <g>
-      {/* Rectangle principal */}
+      {/* Person principale */}
       <rect
-        x={-person1Width / 2}
-        y={-height / 2}
-        width={person1Width}
-        height={height}
-        rx={10}
+        x={-totalWidth / 2}
+        y={-baseHeight / 2}
+        width={name1Width}
+        height={baseHeight}
+        rx={6}
         fill={color}
-        stroke="#2d3748"
-        strokeWidth={1.5}
+        stroke="#333"
+        strokeWidth={1}
       />
       <text
-        x={0}
-        y={0}
+        x={-totalWidth / 2 + name1Width / 2}
+        y={4}
         textAnchor="middle"
-        alignmentBaseline="central"
-        fontSize={12}
-        fill="#ffffff"
-        color="#ffffff"
+        alignmentBaseline="middle"
+        fontSize={fontSize}
+        fill="#fff"
       >
-        {nodeDatum.name}
+        {name1}
       </text>
 
-      {/* Rectangle du conjoint, si présent */}
+      {/* Conjoint (si présent) */}
       {nodeDatum.conjointData && (
         <>
           <rect
-            x={-conjointWidth / 2}
-            y={height / 2 + spacing}
-            width={conjointWidth}
-            height={height}
-            rx={8}
-            fill="#68d391" // vert pour le conjoint
-            stroke="#2d3748"
-            strokeWidth={1.5}
+            x={-totalWidth / 2 + name1Width + spacingBetweenPartners}
+            y={-baseHeight / 2}
+            width={name2Width}
+            height={baseHeight}
+            rx={6}
+            fill="#68d391"
+            stroke="#333"
+            strokeWidth={1}
           />
           <text
-            x={0}
-            y={height + spacing}
+            x={-totalWidth / 2 + name1Width + spacingBetweenPartners + name2Width / 2}
+            y={4}
             textAnchor="middle"
-            alignmentBaseline="central"
-            fontSize={12}
+            alignmentBaseline="middle"
+            fontSize={fontSize}
             fill="#000"
           >
-            {nodeDatum.conjointData.name}
+            {name2}
           </text>
         </>
       )}
