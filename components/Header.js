@@ -60,8 +60,13 @@ function Header() {
         dispatch(removeAllBookmark());
     };
 
+    const handleClose = () => {
+        console.log('Close Modal');
+        setIsModalVisible(false);
+    }
+
     const showModal = () => {
-        setIsModalVisible(!isModalVisible);
+        setIsModalVisible(true);
     };
 
     let modalContent;
@@ -118,11 +123,10 @@ function Header() {
                 <Link href="/bookmarks"><span className={styles.link}>Bookmarks</span></Link> */}
             </div>
 
-            {isModalVisible && <div id="react-modals">
-                <Modal getContainer="#react-modals" className={styles.modal} visible={isModalVisible} closable={false} footer={null}>
+            {isModalVisible && 
+                <Modal getContainer="#react-modals" className={styles.modal} visible={isModalVisible} closable={true} footer={null} onCancel={() => handleClose()}>
                     {modalContent}
-                </Modal>
-            </div>}
+                </Modal>}
         </header >
     );
 }
