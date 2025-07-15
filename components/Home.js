@@ -1,67 +1,58 @@
-import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
 import PersonNode from '../components/PersonNode';
 
-const Tree = dynamic(() => import('react-d3-tree').then(mod => mod.default || mod.Tree), { ssr: false });
-
 function Home() {
-  const [treeData, setTreeData] = useState(null);
 
-  const createCoupleNode = (node) => {
-  const coupleNode = {
-    name: 'CoupleNode',
-    isCoupleNode: true,
-    children: [
-      {
-        name: node.name,
-        ...node,
-        conjointData: node.conjointData,
-        children: [] // empty! move children out
-      },
-      ...(node.children || []).map(child => createCoupleNode(child))
-    ]
-  };
-  return coupleNode;
-}
+  const [peopleData, setPeopleData] = useState([]); // État pour stocker les données
+  const [loading, setLoading] = useState(true); // État pour le chargement
+  const [error, setError] = useState(null); // État pour les erreurs
+
+  const fetchPeople = async () => {
+      try {
+        const response = await fetch(`http://localhost:3000/persons`);
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data = await response.json(); // Convertir la réponse en JSON
+        
+        if (!data || !data.family) {
+          console.log('No people found');
+          return [];
+        }
+        
+        return data.family;
+      } catch (err) {
+        console.error('Error fetching people:', err);
+        setError(err.message);
+        return [];
+      }
+    };
 
   useEffect(() => {
-    async function fetchTree() {
-      const response = await fetch('http://localhost:3000/api/arbre/681e6c6a7c81c7ebb080b91e');
-      const data = await response.json();
-      setTreeData(data);
-      createCoupleNode(data);
-      const treeWithCoupleNodes = createCoupleNode(data);
-      setTreeData(treeWithCoupleNodes);
-    }
+    const loadPeople = async () => {
+    setLoading(true);
+    const data = await fetchPeople();
+    setPeopleData(data);
+    setLoading(false);
+    };
 
-    fetchTree();
+    loadPeople();
   }, []);
 
-  if (!treeData) return <p>Chargement de l’arbre…</p>;
+  // Gérer les états de chargement et d'erreur
+  if (loading) return <div>Chargement...</div>;
+  if (error) return <div>Erreur : {error}</div>;
 
+  // Mapper les données une fois qu'elles sont chargées
+  const persons = peopleData.map((data, i) => {
+    return <PersonNode key={i} {...data} />;
+  });
+ 
   return (
-    <div style={{ width: '100vw', height: '100vh' }}>
-      <Tree
-        data={[treeData]}
-        orientation="horizontal"
-        collapsible={false}
-        pathFunc="step"
-        translate={{ x: 100, y: 300 }}
-        nodeSize={{ x: 150, y: 40 }}
-        separation={{ siblings: 1, nonSiblings: 1 }}
-        renderCustomNodeElement={({ nodeDatum, toggleNode, hierarchyPointNode }) => {
-          if (nodeDatum.isCoupleNode) {
-            // Décale ce noeud de jointure vers le parent principal
-            return (
-              <g transform={`translate(-10, 0)`}></g> // << Clé ici
-            );
-          }
-          return <PersonNode nodeDatum={nodeDatum} />;
-        }}
-        zoomable={true}
-        initialZoom={0.7} // optionnel : zoom de départ
-        zoomExtent={[0.3, 3]} // <-- augmente le zoom max autorisé
-      />
+    <div>
+      {persons}
     </div>
   );
 }

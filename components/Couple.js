@@ -4,7 +4,12 @@ import Perso from "./Person"
 
 function Couple() {
 
-    fetch()
+    const getPersonInfos = async () => {
+        const response = await fetch(`${process.env.LOCAL_BACKEND_URI}/api/arbre/681e6c6a7c81c7ebb080b91e`);
+        const data = response.json()
+    }
+
+    
 
     return (
         <div>
