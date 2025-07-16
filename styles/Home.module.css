@@ -2,9 +2,9 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: top;
   min-height: 100vh;
-  padding: 4rem 0;
+  padding: 50px;
 }
 
 .title {
@@ -19,4 +19,20 @@
 
 .title a:hover, .title a:focus, .title a:active {
   text-decoration: underline;
+}
+
+.couple {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.family {
+  margin-bottom: 20px;
+  padding: 10px;
+}
+
+.children {
+  margin-left: 20px;
+  margin-top: 10px;
 }

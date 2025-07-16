@@ -99,3 +99,6 @@
 .hiddenArticles {
 	cursor: pointer;
 }
+.errors {
+	color: black;
+}

@@ -14,33 +14,40 @@ function Header() {
     const [date, setDate] = useState('2050-11-22T23:59:59');
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [signUpUsername, setSignUpUsername] = useState('');
+    const [signUpEmail, setSignUpEmail] = useState('');
     const [signUpPassword, setSignUpPassword] = useState('');
+    const [signUpErrors, setSignUpErrors] = useState('');
     const [signInUsername, setSignInUsername] = useState('');
     const [signInPassword, setSignInPassword] = useState('');
+    const [signInErrors, setSignInErrors] = useState('');
 
     useEffect(() => {
         setDate(new Date());
     }, []);
 
     const handleRegister = () => {
-        fetch('http://localhost:3000/users/signup', {
+        console.log('bouton de signup détecté');
+        fetch(`http://localhost:3000/users/signup`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username: signUpUsername, password: signUpPassword }),
+            body: JSON.stringify({ username: signUpUsername, email: signUpEmail, password: signUpPassword }),
         }).then(response => response.json())
             .then(data => {
                 if (data.result) {
                     dispatch(login({ username: signUpUsername, token: data.token }));
                     setSignUpUsername('');
+                    setSignUpEmail('');
                     setSignUpPassword('');
                     setIsModalVisible(false)
+                } else {
+                    setSignUpErrors(data.error)
                 }
             });
     };
 
     const handleConnection = () => {
 
-        fetch('http://localhost:3000/users/signin', {
+        fetch(`http://localhost:3000/users/signin`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ username: signInUsername, password: signInPassword }),
@@ -76,8 +83,10 @@ function Header() {
                 <div className={styles.registerSection}>
                     <p>Sign-up</p>
                     <input type="text" placeholder="Username" id="signUpUsername" onChange={(e) => setSignUpUsername(e.target.value)} value={signUpUsername} />
+                    <input type="text" placeholder="Email" id="signUpEmail" onChange={(e) => setSignUpEmail(e.target.value)} value={signUpEmail} />
                     <input type="password" placeholder="Password" id="signUpPassword" onChange={(e) => setSignUpPassword(e.target.value)} value={signUpPassword} />
                     <button id="register" onClick={() => handleRegister()}>Register</button>
+                    <p className={styles.errors}>{signUpErrors}</p>
                 </div>
                 <div className={styles.registerSection}>
                     <p>Sign-in</p>

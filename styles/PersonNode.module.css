@@ -1,31 +1,14 @@
 .person {
-    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: top;
+    padding: 8px;
     border-radius: 8px;
     margin-bottom: 8px;
-    max-width: 300px;
+    max-height: 25px;
     font-family: sans-serif;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     border: 1px solid black;
   }
   
-  /* Couleurs par génération */
-  .gen0 {
-    background-color: #e6f7ff;
-  }
-  
-  .gen1 {
-    background-color: #d9f7be;
-  }
-  
-  .gen2 {
-    background-color: #fff1b8;
-  }
-  
-  .gen3 {
-    background-color: #ffd8bf;
-  }
-  
-  .gen4 {
-    background-color: #ffccc7;
-  }
   
