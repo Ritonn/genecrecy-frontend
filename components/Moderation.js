@@ -4,15 +4,11 @@ import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 
-function Index() {
+function Moderation() {
 
   const router = useRouter();
   const user = useSelector((state) => state.user.value);
   const token = user.token;
-
-  useEffect(() => {
-    !token && router.push('/login');
-  }, [])
 
   return (
   <div>
@@ -22,4 +18,4 @@ function Index() {
   )
 }
 
-export default Index;
+export default Moderation;
