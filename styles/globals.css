@@ -58,3 +58,36 @@ button:hover {
   outline: none;
   text-shadow: 1px 1px 0px rgb(134, 131, 131);
 }
+
+/* Couleurs par génération */
+.gen0 {
+  background-color: #e6f7ff;
+}
+
+.gen1 {
+  background-color: #7f7f7f;
+}
+
+.gen2 {
+  background-color: #1ec01eff;
+}
+
+.gen3 {
+  background-color: #1e90ff;
+}
+
+.gen4 {
+  background-color: #ff0000;
+}
+
+.gen5 {
+  background-color: #ffd700;
+}
+
+.gen6 {
+  background-color: #8a2be2;
+}
+
+.gen7 {
+  background-color: #ff69b4;
+}
