@@ -34,10 +34,10 @@ function Signin() {
     return (
         <div className={styles.registerContainer}>
             <div className={styles.registerSection}>
-                <p className = {styles.loginModalTitle}>Sign-in</p>
-                <input className = {styles.loginField} type="text" placeholder="Username" id="username" onChange={(e) => setUsername(e.target.value)} value={username} />
-                <input className = {styles.loginField} type="password" placeholder="Password" id="password" onChange={(e) => setPassword(e.target.value)} value={password} onKeyDown={(e)=>{if(e.key==="Enter"){handleSignin()}}} />
-                <button className= {styles.modalSigninButton} id="connection" onClick={() => handleSignin()} > Connexion </button>
+                <p className = {styles.loginModalTitle}>Connectez-vous pour accéder au site !</p>
+                <input className = {styles.loginField} type="text" placeholder="Pseudo" id="username" onChange={(e) => setUsername(e.target.value)} value={username} />
+                <input className = {styles.loginField} type="password" placeholder="Mot de passe" id="password" onChange={(e) => setPassword(e.target.value)} value={password} onKeyDown={(e)=>{if(e.key==="Enter"){handleSignin()}}} />
+                <button className= {styles.modalSigninButton} id="connection" onClick={() => handleSignin()}> Connexion </button>
                 <p className={styles.errors}>{errors}</p>
             </div>
         </div>

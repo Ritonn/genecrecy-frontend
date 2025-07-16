@@ -6,14 +6,17 @@ import styles from '../styles/Header.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faXmark, faEye } from '@fortawesome/free-solid-svg-icons';
 import { Modal } from 'antd';
+import AddPerson from '../components/AddPerson';
 import Link from 'next/link';
 
-function Header() {
+function Header(props) {
     const router = useRouter();
     const dispatch = useDispatch();
     const user = useSelector((state) => state.user.value);
-
+    const [visibleModal, setVisibleModal] = useState(null);
     const [date, setDate] = useState('2050-11-22T23:59:59');
+
+    console.log('Données utilisateur', user)
 
     useEffect(() => {
         setDate(new Date());
@@ -26,11 +29,11 @@ function Header() {
 
     const handleClose = () => {
         console.log('Close Modal');
-        setIsModalVisible(false);
+        setVisibleModal(false);
     }
 
     const showModal = () => {
-        setIsModalVisible(true);
+        setVisibleModal(true);
     };
 
     let userSection;
@@ -46,15 +49,23 @@ function Header() {
     return (
         <header className={styles.header}>
             <div className={styles.logoContainer}>
+                <Modal
+                getContainer="#react-modals"
+                className={styles.modal}
+                open={visibleModal}
+                closable={true}
+                footer={null}
+                onCancel={() => setVisibleModal(null)}
+                >
+                <AddPerson />
+                </Modal>
                 <h1 className={styles.title}>Genecrecy</h1>
+                <div className={styles.leftContainer}>
+                {user.roles?.includes("moderator")  || user.roles?.includes("admin") && <button onClick={() => props.moderation()}> Modération </button>}
+                <button onClick={() => showModal()}> Ajouter quelqu'un </button>
                 {userSection}
+                </div>
             </div>
-
-            <div className={styles.linkContainer}>
-                {/* <Link href="/"><span className={styles.link}>Articles</span></Link>
-                <Link href="/bookmarks"><span className={styles.link}>Bookmarks</span></Link> */}
-            </div>
-
             {/* {isModalVisible && 
                 <Modal getContainer="#react-modals" className={styles.modal} visible={isModalVisible} closable={true} footer={null} onCancel={() => handleClose()}>
                     {modalContent}

@@ -42,26 +42,25 @@ function LoginPage() {
         <div className={styles.rightContainer}>
           <img
             className={styles.logo}
-            style={{ transform: "rotate(180deg)" }}
             src={"/logo.png"}
           />
-          <h1 className={styles.titre}>See what's happening</h1>
-          <h2 className={styles.slogan}>Join Hackatweet today.</h2>
+          <h1 className={styles.titre}>Genecrecy 2.0</h1>
+          <h2 className={styles.slogan}>On ne prêche que d'exemples</h2>
           <button
             className={styles.signupBtn}
             onClick={() => setVisibleModal("signup")}
           >
-            {" "}
-            Sign up{" "}
+            Inscription
           </button>
-          <p className={styles.phrase}>Already have an account ?</p>
-          <button
-            className={styles.signinBtn}
-            onClick={() => setVisibleModal("signin")}
-          >
-            {" "}
-            Sign in{" "}
-          </button>
+          <div>
+            <p className={styles.phrase}>Vous avez déjà un compte ?</p>
+            <button
+              className={styles.signinBtn}
+              onClick={() => setVisibleModal("signin")}
+            >
+              Connexion
+            </button>
+          </div>
         </div>
       </div>
     </div>

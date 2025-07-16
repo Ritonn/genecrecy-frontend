@@ -1,5 +1,5 @@
 import Home from '../components/Home';
-import Header from '../components/Header';
+import AddRequest from '../components/AddRequest';
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
@@ -12,8 +12,10 @@ function Moderation() {
 
   return (
   <div>
-    <Header />
-    <Home />;
+    <h1>Bienvenue sur la tableau de bord de modération !</h1>
+    <AddRequest />
+    <AddRequest />
+    <AddRequest />
   </div>
   )
 }

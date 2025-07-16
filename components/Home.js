@@ -90,9 +90,6 @@ function Home() {
     (!person.enfants || person.enfants.length === 0)
   );
 
-  console.log('Le tableau DATA2 : ', ...data2);
-  console.log('Le tableau DATA3 : ', ...data3);
-
   // Fonction récursive pour rendre un couple et ses descendants
   const renderCoupleAndDescendants = (couple, processedCouples = new Set(), processedPersons = new Set()) => {
     // Éviter les boucles infinies
@@ -111,16 +108,8 @@ function Home() {
     
     const coupleElement = (
       <div key={couple.coupleKey} className={styles.couple}> 
-          <Popover content={popoverContent} trigger="click">
-            <Button className={`reset-popover-btn ${styles.popoverButton}`}>
               <PersonNode {...firstConjoint} />
-            </Button>
-          </Popover>
-          <Popover content={popoverContent} trigger="click">
-            <Button>
               <PersonNode {...secondConjoint} />
-            </Button>
-          </Popover>
       </div>
     );
 
@@ -150,14 +139,7 @@ function Home() {
         // L'enfant est célibataire, rendre directement s'il n'a pas déjà été traité
         if (!processedPersons.has(childId)) {
           processedPersons.add(childId);
-          return (
-          // <Popover content={popoverContent} trigger="click">
-          //   <Button>
-              <PersonNode key={childId} {...child} />
-          //  </Button>
-          // </Popover>
-          
-          );
+          return <PersonNode key={childId} {...child} />;
         }
         return null;
       }
