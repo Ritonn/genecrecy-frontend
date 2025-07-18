@@ -19,7 +19,7 @@ function AddPersonForm() {
 
     // Fonction d'envoi d'une nouvelle personne en base
     const handleSubmit = async (prenom, nom, dateNaissance, pere, mere) => {
-        const response = await fetch(`http://localhost:3000/persons`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_ADRESS}/persons`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ username: username, password: password }),
@@ -59,7 +59,7 @@ function AddPersonForm() {
 
             if (prenomNom[1] !== '' && prenomNom.length === 2) {
 
-            const response = await fetch(`http://localhost:3000/persons/search`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_ADRESS}/persons/search`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ prenom: prenomNom[0], nom: prenomNom[1] }),

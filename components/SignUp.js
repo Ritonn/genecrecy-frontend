@@ -13,7 +13,7 @@ function Signup() {
 
     // Fonction d'envoi des infos de création d'un nouveau compte à la BDD
     async function handleSignup() {
-        const response = await fetch(`http://localhost:3000/users/signup`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_ADRESS}/users/signup`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ username: username, email: email, password: password }),
