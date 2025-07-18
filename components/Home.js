@@ -18,7 +18,7 @@ function Home() {
 
   const fetchPeople = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/persons`);
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_ADRESS}/persons`);
       
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
