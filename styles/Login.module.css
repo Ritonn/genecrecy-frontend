@@ -1,0 +1,141 @@
+.globalContainer {
+    display: grid;
+    grid-template-columns: repeat(14, 1fr);
+    grid-template-rows: repeat(14, 1fr);
+    height: 100vh;
+    background: radial-gradient(#539c69, #024b18);
+}
+
+.modal {
+    padding: 0px;
+    border:0px;
+    border-radius: 10px;
+    background-color: #326b43;
+}
+
+.leftContainer {
+    grid-row-start: 1;
+    grid-row-end: 15;
+    grid-column-start: 1;
+    grid-column-end: 6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url('/grande-maison.png');
+    background-size: cover;
+    background-position: center center;
+}
+
+.rightContainer {
+    grid-row-start: 1;
+    grid-row-end: 15;
+    grid-column-start: 6;
+    grid-column-end: 15;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.logo {
+    height: 50px;
+    width: 50px;
+}
+
+.titre {
+    width: 60%;
+    color: white;
+    font-size: 50px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode';
+    font-weight: bold;
+}
+
+.slogan {
+    color: white;
+    font-size: 35px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode';
+    font-weight: bold;
+}
+
+.registerContainer {
+	display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width:350px;
+    min-height:400px;
+}
+
+.registerSection{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.signupBtn {
+    font-weight: 0;
+    color: white;
+    width: 200px;
+    height: 40px;
+    cursor: pointer;
+    background-color: #024b18;
+    border: 0;
+    border-radius: 25px;
+}
+
+.signupBtn:hover {
+    background-color: #12773085;
+    color: black;
+    border: 1px solid black;
+}
+
+.signinBtn {
+    color: black;
+    width: 200px;
+    height: 40px;
+    cursor: pointer;
+    background-color: #539c69;
+    border: 1px solid black;
+    border-radius: 25px;
+}
+
+.signinBtn:hover {
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.phrase {
+    margin-left: 10px;
+    color: white;
+    font-weight: 600;
+}
+
+.loginModalTitle{
+    font-weight: 0;
+    color:white;
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+.loginField{
+    width:50%;
+    min-width: 200px;
+    height:35px;
+    background-color: rgb(235, 235, 235);
+    border:1px solid gray;
+    color: gray;
+    margin:10px;
+    padding-left: 10px;
+    border-radius: 7px;
+}
+
+.modalSigninButton{
+    background-color: white;
+    color : rgba(38, 38, 47);
+    height:36px;
+    width:50%;
+    min-width: 200px;
+    border-radius: 18px;
+    font-weight: 700;
+    margin:10px;
+}

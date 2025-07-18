@@ -1,20 +1,16 @@
-@font-face {
-	font-family: "Old London";
-	src: url("/fonts/OldLondon.ttf");
-}
-
 .header {
-	border-bottom: 2px rgb(233, 190, 89) solid;
+	border-bottom: 1px #093104 solid;
 	display: flex;
-	flex-direction: column;
-	justify-content: center;
+	justify-content: space-between;
 	align-items: center;
-    height: 10vh;
+    height: 12vh;
+	background-color: rgba(255, 255, 255, 0.39);
 }
 
 .title {
-	font-size: 44px;
-	font-family: "Old London";
+	font-size: 30px;
+	font-weight: 600;
+	font-family: 'Trebuchet MS', 'Lucida Sans Unicode';
 	text-shadow: 1px 1px 0px #000;
 }
 
@@ -23,7 +19,14 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	padding: 0px 30px 0px 30px;
+	padding: 0 40px;
+}
+
+.rightContainer {
+	width: 600px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 }
 
 .linkContainer {
@@ -65,7 +68,6 @@
 
 .registerContainer {
 	display: flex;
-	margin-bottom: 10px;
 	border-top: 0.5px lightgray solid;
 }
 
@@ -101,4 +103,30 @@
 }
 .errors {
 	color: black;
+}
+
+.moderationButton {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-weight: normal;
+	color: #a00202;
+	border-right: 1px solid #a00202;
+	padding: 0 25px;
+}
+
+.addButton {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-weight: normal;
+	color: #000000;
+	border-right: 1px solid #a00202;
+	padding: 0 25px;
+}
+
+.buttonsContainer {
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }

@@ -1,11 +1,20 @@
 import { useEffect, useState } from 'react';
 import PersonNode from '../components/PersonNode';
 import styles from '../styles/Home.module.css';
+import { Button, Popover } from 'antd';
+import { faBorderNone } from '@fortawesome/free-solid-svg-icons';
 
 function Home() {
   const [peopleData, setPeopleData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const popoverContent = (
+  <div>
+    <button>Modifier</button>
+    <button>Ajouter un proche</button>
+  </div>
+);
 
   const fetchPeople = async () => {
     try {
@@ -45,7 +54,6 @@ function Home() {
   if (loading) return <div>Chargement...</div>;
   if (error) return <div>Erreur : {error}</div>;
 
-
   // On ajoute toutes les personnes de la base dans data1
   const data1 = peopleData;
 
@@ -82,25 +90,26 @@ function Home() {
     (!person.enfants || person.enfants.length === 0)
   );
 
-  console.log('Le tableau DATA2 : ', ...data2);
-  console.log('Le tableau DATA3 : ', ...data3);
-
   // Fonction récursive pour rendre un couple et ses descendants
-  const renderCoupleAndDescendants = (couple, processedCouples = new Set()) => {
+  const renderCoupleAndDescendants = (couple, processedCouples = new Set(), processedPersons = new Set()) => {
     // Éviter les boucles infinies
     if (processedCouples.has(couple.coupleKey)) {
       return null;
     }
     processedCouples.add(couple.coupleKey);
+    
+    // Marquer les personnes du couple comme traitées
+    processedPersons.add(couple.conjoint1._id);
+    processedPersons.add(couple.conjoint2._id);
 
     // Rendre le couple (celui avec estNeFamille=true en premier)
     const firstConjoint = couple.conjoint1.estNeFamille ? couple.conjoint1 : couple.conjoint2;
     const secondConjoint = couple.conjoint1.estNeFamille ? couple.conjoint2 : couple.conjoint1;
     
     const coupleElement = (
-      <div key={couple.coupleKey} className={styles.couple}>
-        <PersonNode {...firstConjoint} />
-        <PersonNode {...secondConjoint} />
+      <div key={couple.coupleKey} className={styles.couple}> 
+              <PersonNode {...firstConjoint} />
+              <PersonNode {...secondConjoint} />
       </div>
     );
 
@@ -125,42 +134,20 @@ function Home() {
 
       if (childCouple) {
         // L'enfant est dans un couple, récursion
-        return renderCoupleAndDescendants(childCouple, processedCouples);
+        return renderCoupleAndDescendants(childCouple, processedCouples, processedPersons);
       } else {
-        // L'enfant est célibataire, rendre directement
-        return <PersonNode key={childId} {...child} />;
+        // L'enfant est célibataire, rendre directement s'il n'a pas déjà été traité
+        if (!processedPersons.has(childId)) {
+          processedPersons.add(childId);
+          return <PersonNode key={childId} {...child} />;
+        }
+        return null;
       }
     }).filter(Boolean); // Enlever les null
 
-    let color = "";
-    let generation = couple.conjoint1.idGeneration;
-    console.log(generation);
-
-    if (generation === 1) {
-      color = "#b9b8b8ff"
-    }
-    if (generation === 2) {
-      color = "#96ee96ff"
-    }
-    if (generation === 3) {
-      color = "#85c1fdff"
-    }
-    if (generation === 4) {
-      color = "#ffc8c8ff"
-    }
-    if (generation === 5) {
-      color = "#f8efbbff"
-    }
-    if (generation === 6) {
-      color = "#a769e0ff"
-    }
-    if (generation === 7) {
-      color = "#f096c3ff"
-    }
-
     // Retourner le couple avec ses descendants
     return (
-      <div key={couple.coupleKey} className={styles.family} style={{borderLeft: `2px solid ${color}`}}>
+      <div key={couple.coupleKey} className={styles.family}>
         {coupleElement}
         {childrenElements.length > 0 && (
           <div className={styles.children}>
@@ -188,13 +175,27 @@ function Home() {
     return !isChild1 && !isChild2;
   });
 
-  // Rendre l'arbre généalogique
-  const familyTree = [
-    // Couples racines et leurs descendants
-    ...rootCouples.map(couple => renderCoupleAndDescendants(couple)),
-    // Personnes célibataires sans enfants
-    ...data3.map(person => <PersonNode key={person._id} {...person} />)
-  ];
+  // Rendre l'arbre généalogique avec un Set partagé pour éviter les doublons
+  const globalProcessedCouples = new Set();
+  const globalProcessedPersons = new Set();
+  
+  const familyTree = [];
+  
+  // Traiter les couples racines et leurs descendants
+  rootCouples.forEach(couple => {
+    const renderedFamily = renderCoupleAndDescendants(couple, globalProcessedCouples, globalProcessedPersons);
+    if (renderedFamily) {
+      familyTree.push(renderedFamily);
+    }
+  });
+  
+  // Ajouter les personnes célibataires sans enfants qui n'ont pas déjà été traitées
+  data3.forEach(person => {
+    if (!globalProcessedPersons.has(person._id)) {
+      globalProcessedPersons.add(person._id);
+      familyTree.push(<PersonNode key={person._id} {...person} />);
+    }
+  });
 
   return (
     <div className={styles.main}>
