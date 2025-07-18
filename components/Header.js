@@ -6,14 +6,14 @@ import styles from '../styles/Header.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faXmark, faEye } from '@fortawesome/free-solid-svg-icons';
 import { Modal } from 'antd';
-import AddPerson from './AddPersonForm';
+import AddPersonForm from './AddPersonForm';
 import Link from 'next/link';
 
 function Header(props) {
     const router = useRouter();
     const dispatch = useDispatch();
     const user = useSelector((state) => state.user.value);
-    const [visibleModal, setVisibleModal] = useState(null);
+    const [visibleModal, setVisibleModal] = useState(false);
     const [date, setDate] = useState('2050-11-22T23:59:59');
 
     console.log('Données utilisateur', user)
@@ -32,8 +32,8 @@ function Header(props) {
         setVisibleModal(false);
     }
 
-    const showModal = () => {
-        setVisibleModal(true);
+    const changeModalState = () => {
+        setVisibleModal(!visibleModal);
     };
 
     let userSection;
@@ -57,13 +57,13 @@ function Header(props) {
                 footer={null}
                 onCancel={() => setVisibleModal(null)}
                 >
-                <AddPerson />
+                <AddPersonForm changeVisibleModal={changeModalState}/>
                 </Modal>
                 <h1 className={styles.title}>Genecrecy</h1>
                 <div className={styles.rightContainer}>
                 <div className={styles.buttonsContainer}> 
                 {user.roles?.includes("moderator")  || user.roles?.includes("admin") && <button className={styles.moderationButton} onClick={() => props.moderation()}> MODÉRATION </button>}
-                <button className={styles.addButton} onClick={() => showModal()}> AJOUTER  </button>
+                <button className={styles.addButton} onClick={() => changeModalState()}> AJOUTER  </button>
                 </div>
                 {userSection}
                 </div>
