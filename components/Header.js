@@ -63,7 +63,7 @@ function Header(props) {
                 <div className={styles.rightContainer}>
                 <div className={styles.buttonsContainer}> 
                 {user.roles?.includes("moderator")  || user.roles?.includes("admin") && <button className={styles.moderationButton} onClick={() => props.moderation()}> MODÉRATION </button>}
-                <button className={styles.addButton} onClick={() => showModal()}> AJOUTER QUELQU'UN </button>
+                <button className={styles.addButton} onClick={() => showModal()}> AJOUTER  </button>
                 </div>
                 {userSection}
                 </div>
