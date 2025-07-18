@@ -6,7 +6,7 @@ import styles from '../styles/Header.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faXmark, faEye } from '@fortawesome/free-solid-svg-icons';
 import { Modal } from 'antd';
-import AddPerson from '../components/AddPerson';
+import AddPerson from './AddPersonForm';
 import Link from 'next/link';
 
 function Header(props) {
@@ -60,9 +60,11 @@ function Header(props) {
                 <AddPerson />
                 </Modal>
                 <h1 className={styles.title}>Genecrecy</h1>
-                <div className={styles.leftContainer}>
-                {user.roles?.includes("moderator")  || user.roles?.includes("admin") && <button onClick={() => props.moderation()}> Modération </button>}
-                <button onClick={() => showModal()}> Ajouter quelqu'un </button>
+                <div className={styles.rightContainer}>
+                <div className={styles.buttonsContainer}> 
+                {user.roles?.includes("moderator")  || user.roles?.includes("admin") && <button className={styles.moderationButton} onClick={() => props.moderation()}> MODÉRATION </button>}
+                <button className={styles.addButton} onClick={() => showModal()}> AJOUTER QUELQU'UN </button>
+                </div>
                 {userSection}
                 </div>
             </div>
